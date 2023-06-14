@@ -3,9 +3,14 @@ import { Card } from 'react-native-paper';
 import { FlatList } from 'react-native-gesture-handler';
 import { PostView } from 'lemmy-js-client';
 import { useObservable } from 'react-use';
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import lemmyClient from '../lemmy-client';
 
-function PostListScreen() {
+interface Props {
+  navigation: NavigationProp<ParamListBase>;
+}
+
+function PostListScreen({ navigation }: Props) {
   const lemmy = useObservable(lemmyClient);
   const [posts, setPosts] = useState<PostView[]>([]);
 
@@ -19,12 +24,16 @@ function PostListScreen() {
     });
   }, [lemmy, setPosts]);
 
+  const openPost = (postId: number) => {
+    navigation.navigate('Post Detail', { postId });
+  };
+
   return (
     <FlatList
       data={posts}
       keyExtractor={(item) => item.post.ap_id}
       renderItem={({ item }) => (
-        <Card>
+        <Card onPress={() => openPost(item.post.id)}>
           {item.post.thumbnail_url && (
             <Card.Cover source={{ uri: item.post.thumbnail_url }} />
           )}

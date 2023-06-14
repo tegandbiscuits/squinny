@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Card } from 'react-native-paper';
 import { FlatList } from 'react-native-gesture-handler';
 import { PostView } from 'lemmy-js-client';
-import useLemmy from '../useLemmy';
+import { useObservable } from 'react-use';
+import lemmyClient from '../lemmy-client';
 
 function PostListScreen() {
-  const { lemmy } = useLemmy();
+  const lemmy = useObservable(lemmyClient);
   const [posts, setPosts] = useState<PostView[]>([]);
 
   useEffect(() => {
+    console.log('getting posts', lemmy);
     lemmy?.getPosts({}).then((res) => {
       setPosts(res.posts);
     }).catch((err) => {

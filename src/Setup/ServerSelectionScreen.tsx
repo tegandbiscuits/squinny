@@ -1,11 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Button } from 'react-native-paper';
-import useSettings from '../useSettings';
+import { updateSettings } from '../settings';
 
 function ServerSelectionScreen() {
-  const { updateSettings } = useSettings();
-
   return (
     <View>
       <Button

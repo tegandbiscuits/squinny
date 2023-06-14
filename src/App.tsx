@@ -3,13 +3,14 @@ import { PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import PostsNavigator from './Posts/PostsNavigator';
-import useSettings from './useSettings';
 import SetupNavigator from './Setup/SetupNavigator';
+import { useObservable } from 'react-use';
+import { settings$ } from './settings';
 
 const Tab = createMaterialBottomTabNavigator();
 
 function RootNavigator() {
-  const { settings } = useSettings();
+  const settings = useObservable(settings$, {});
 
   if (!settings.baseUrl) {
     return (

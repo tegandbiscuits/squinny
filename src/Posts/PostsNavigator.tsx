@@ -12,7 +12,7 @@ function PostsNavigator() {
         header: AppHeader,
       }}
     >
-      <Stack.Screen name="Posts" component={PostListScreen} />
+      <Stack.Screen name="Post List" component={PostListScreen} />
     </Stack.Navigator>
   );
 }
